@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `user` MODIFY `description` VARCHAR(191) NULL,
+    MODIFY `disease` ENUM('RESPIRATORYDISEASE', 'HEADACHE', 'ABDOMINALPAIN') NULL,
+    MODIFY `severity` ENUM('WEAK', 'MEDIUM', 'HARD') NULL;

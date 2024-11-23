@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId    Int      @id @default(autoincrement()) @map("userId")
+  bornYear  Int      @map("bornYear")
+  description  String?
+  disease   Disease?
+
+  @@map("User")
+}
+
+model Location {
+  locationId    Int      @id @default(autoincrement()) @map("locationId")
+  locationName  String
+  latitude      Float   @map("latitude")
+  longitude     Float   @map("longitude")
+  medi          String   @map("medi")
+  stock         String   @map("stock")
+  startTime     DateTime @map("startTime")
+  endTime       DateTime @map("endTime")
+
+  // 1대 다 관계 설정: Location -> Location_Pill
+//  locationPills Location_Pill[] @relation("LocationToLocationPill")
+
+  @@map("Location")
+}
+
+
+//model Location_Pill {
+//  locationPillId Int      @id @default(autoincrement()) @map("locationPillId")
+//  locationId     Int      @map("locationId")
+//  pillId         Int      @map("pillId")
+
+// 관계 설정
+//  location Location @relation("LocationToLocationPill", fields: [locationId], references: [locationId])
+//  stocks   Stock[]  @relation("LocationPillToStock")
+
+//  @@map("Location_Pill")
+//}
+
+model Pill {
+  pillId Int @id @default(autoincrement()) @map("pillId")
+  pillName String
+  @@map("Pill")
+}
+
+//model Stock {
+//  stockId         Int           @id @default(autoincrement()) @map("stockId")
+//  locationPillId  Int           @map("locationPillId")
+//  stock           String        @map("stock")
+
+  // 관계 설정
+//  locationPill Location_Pill @relation("LocationPillToStock", fields: [locationPillId], references: [locationPillId])
+
+//  @@map("Stock")
+//}
+
+enum Disease {
+  RESPIRATORYDISEASE // 호흡기 질환
+  HEADACHE           // 두통
+  ABDOMINALPAIN      // 복통
+}
