@@ -1,0 +1,3 @@
+[submodule "metaphor-fe"]
+	path = metaphor-fe
+	url = https://github.com/metaphor-1st/metaphor-fe.git
