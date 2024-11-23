@@ -1,0 +1,45 @@
+.ProgressBarWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.ProgressBarWrap .Step {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: white;
+  background-color: #f0f0f0;
+}
+
+.StepContainer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.StepLine {
+    width: 4.2rem;
+  }
+
+
+@media (max-width: 600px) {
+    .ProgressBarWrap {
+      gap: 1rem; /* Increase space between steps */
+      padding: 0 1rem; /* Add padding to prevent content touching screen edges */
+    }
+  
+    .Step {
+      width: 8vw; /* Increase step size on small screens */
+      height: 8vw; /* Increase height to keep proportions */
+      max-width: 2rem; /* Restrict maximum size */
+      max-height: 2rem; /* Restrict maximum size */
+    }
+  }
+  

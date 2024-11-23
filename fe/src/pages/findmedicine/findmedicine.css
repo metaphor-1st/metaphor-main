@@ -1,0 +1,60 @@
+.TitleBox {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.ContentResult {
+  background-color: #f8f8f8;
+  border-radius: 2rem;
+  height: 100%;
+  width: 105%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 3rem;
+  position: relative;
+  left: -10%;
+  right: -10%;
+  padding: 2rem;
+}
+
+.DiseaseDisc {
+  background-color: white;
+  border-radius: 1.5rem;
+  border: 1px solid #e8edfc;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.DiseaseTitle {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.TitleLine {
+  width: 3rem;
+  height: 0.3rem;
+  background-color: #eeeeee;
+  border-radius: 1rem;
+  margin: 1.3rem 0;
+}
+
+.DiseaseDiscText {
+  width: 80%;
+  margin-bottom: 2rem;
+}
+
+.SymptomList{
+    background-color: white;
+    border-radius: 1.5rem;
+    border: 1px solid #e8edfc;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 2.2rem 1rem;
+    list-style: url("/src/images/listDot.svg");
+}

@@ -1,0 +1,14 @@
+.PainText {
+  color: var(---900, #212121);
+  font-family: Pretendard;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem; /* 120% */
+  margin: 1.25rem 0rem;
+}
+
+.PainInputWrap {
+  padding: 3.75rem 0rem 0.625rem 0rem;
+  margin-bottom: 1.9rem;
+}

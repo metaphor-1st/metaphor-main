@@ -1,0 +1,59 @@
+.MedicineWrap {
+  display: flex;
+
+  background-color: white;
+  border-radius: 1.5rem;
+  border: 1px solid #e8edfc;
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+}
+.ImgBox {
+  border: 1px solid #e8edfc;
+  border-radius: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6.5rem;
+}
+
+.MedicineName {
+  display: flex;
+  margin-left: 1.1rem;
+  margin-right: 1.1rem;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  justify-content: space-between;
+}
+.MedicineNam:last-child {
+  font-weight: 600;
+}
+
+.MedicineLine {
+  width: 18rem;
+  height: 0.15rem;
+  background-color: #eeeeee;
+  border-radius: 1rem;
+  margin: 1.3rem;
+  margin-bottom: 0.8rem;
+}
+.MedicineContent {
+  margin-left: 1.5rem;
+}
+
+.MedicineKind {
+  display: flex;
+  gap: 1rem;
+  color: #9e9e9e;
+}
+.MedicineDose {
+  display: flex;
+  gap: 1rem;
+  color: #9e9e9e;
+}
+.MedicineKind:last-child {
+  color: black;
+}
+.MedicineDose:last-child {
+  color: black;
+}

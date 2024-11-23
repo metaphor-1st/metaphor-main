@@ -1,0 +1,50 @@
+.StartButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  height: 15.125rem;
+  border-radius: 1.25rem;
+  border: 3px solid var(---200, #EEE);
+  background: #FFF;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease-in-out;
+}
+
+.StartButtonContainer:hover {
+  border: 3px solid var(--main-color-500, #2F5CE4);
+  box-shadow: 0px 4px 20px 0px rgba(210, 220, 249, 0.80);
+}
+
+.StartButtonTitle {
+  color: var(---1000, #000);
+  font-family: Pretendard;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.StartButtonDesc {
+  color: var(---800, #424242);
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5625rem;
+  text-align: left;
+}
+
+.highlight {
+  color: var(--main-color-500, #2F5CE4);
+}
+
+.ButtonArrow {
+  display: flex;
+width: 22.4375rem;
+height: 1.875rem;
+padding-left: 1.2rem;
+justify-content: flex-end;
+align-items: center;
+}

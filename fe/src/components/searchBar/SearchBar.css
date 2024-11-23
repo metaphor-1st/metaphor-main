@@ -1,0 +1,46 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.searchBar-container{
+  display: flex;
+  width: 23rem;
+  padding: 0.9375rem 1.25rem;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0.625rem;
+  border: 1px solid var(---200, #EEE);
+
+}
+
+.searchBar-icon{
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.searchBar-input{
+  width: 100%;
+  border: none;
+  outline: none;
+  color: var(---800, #424242);
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem; /* 150% */
+}
+
+
+.searchBar-input::placeholder{
+  color: var(---400, #BDBDBD);
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem; /* 150% */
+}

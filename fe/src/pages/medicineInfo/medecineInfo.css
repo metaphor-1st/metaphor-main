@@ -1,0 +1,30 @@
+.BooleanBtnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 5rem;
+}
+
+.BooleanBtn {
+  width: 13rem;
+  height: 3rem;
+  background-color: white;
+  border: 1px solid #EEEEEE;
+  border-radius: 2rem;
+  box-shadow: 0 4px 5px rgba(238, 238, 238, 1);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #757575;
+  font-family: "Pretendard";
+
+}
+.BooleanBtn.selected {
+    border-color: #2f5ce4;
+    box-shadow: 0 0 10px rgba(47, 92, 228, 0.3);
+    color: #2f5ce4;
+}
+
+.SelectYes {
+    margin-right: auto;
+}

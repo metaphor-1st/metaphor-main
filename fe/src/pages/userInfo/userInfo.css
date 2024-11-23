@@ -1,0 +1,79 @@
+.InfoWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.StepTitle {
+  font-size: 1.5rem;
+  margin: 1.5rem 0;
+  margin-right: auto;
+}
+
+.SubTitle {
+  font-size: 1.2rem;
+  margin: 1.5rem 0;
+  margin-right: auto;
+  margin-top: 5rem;
+}
+.SexBtnWrap {
+  display: flex;
+  gap: 1.5rem;
+}
+.SexBtn {
+  width: 13.3rem;
+  height: 8rem;
+  background-color: white;
+  border: 1px solid #eeeeee;
+  border-radius: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #757575;
+  font-family: "Pretendard";
+  box-shadow: 0 4px 5px rgba(238, 238, 238, 1);
+}
+.SexBtn.selected {
+  border-color: #2f5ce4;
+  box-shadow: 0 0 10px rgba(47, 92, 228, 0.3);
+  color: #2f5ce4;
+}
+
+.SexBtn:hover {
+  background-color: #f7f7f7;
+}
+
+.AgeDropDown {
+  margin-right: auto;
+}
+.NextBtn {
+  position: fixed;
+  bottom: 5rem;
+  width: 27rem;
+  background-color: #2f5ce4;
+  border: none;
+  border-radius: 3rem;
+  color: white;
+  height: 3.5rem;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+ 
+}
+.NextBtn.unselected {
+    background-color: #E0E0E0;
+    cursor: not-allowed;
+  }
+
+@media screen and (max-width: 400px) {
+  .SexBtn {
+    max-width: 10rem;
+    width: 10rem;
+  }
+  .NextBtn {
+    max-width: 20rem;
+    width: 20rem;
+  }
+}

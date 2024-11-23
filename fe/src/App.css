@@ -1,0 +1,40 @@
+html {
+  width: 95%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  font-family: 'Pretendard', sans-serif;
+}
+
+body {
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  padding: 0 2rem;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-family: "Pretendard";
+}
+
+h1, div, ol, li {
+  margin: 0;
+}
+button {
+  cursor: pointer;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 500px) {
+  body {
+    padding: 0 1rem; /* Adjust padding for smaller screens */
+  }
+}
