@@ -5,12 +5,14 @@ import "./painInfo.css";
 import Dropdown from "../../components/dropdown/Dropdown";
 import SearchBar from "../../components/searchBar/SearchBar";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 function PainInfo() {
   const [inputText, setInputText] = useState("");
   const [selectedPain, setSelectedPain] = useState("통증");
   const navigate = useNavigate();
-  const userId = "1234";
+  const location = useLocation();
+  const userId = new URLSearchParams(location.search).get("userId");
 
   const handleClick = async () => {
     if (inputText.trim()) {
