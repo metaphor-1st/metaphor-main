@@ -1,6 +1,10 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client';
+import cors from 'cors';
+
+import { v4 as uuidv4 } from 'uuid';  // uuid 모듈 불러오기
+
 
 // Prisma 클라이언트 초기화
 const prisma = new PrismaClient();
@@ -8,6 +12,8 @@ const prisma = new PrismaClient();
 // 환경 변수 로드
 dotenv.config();
 const app = express();
+
+app.use(cors());
 
 //req.body와 POST 요청을 해석하기 위한 설정
 app.use(express.json());
@@ -28,8 +34,12 @@ app.get('/',  (req, res) => {
 // 사용자 정보 생성
 app.post('/user', (req, res) => {
     try {
+      console.log("Request body:", req.body);
+      const userId = uuidv4()  //userId 생성
       const userInfoRequest = {
+        userId,
         bornYear: req.body.bornYear || null,
+        sex: req.body.sex,
         message: '사용자 정보 생성 요청 완료',
       };
   
@@ -42,6 +52,7 @@ app.post('/user', (req, res) => {
   
       res.status(201).json(userInfoRequest);
     } catch (error) {
+      console.error("Error:", error);
       res.status(500).json({
         error: '사용자 정보 생성 중 오류 발생',
         message: error.message,
@@ -195,7 +206,7 @@ app.get("/map/medi/:mediId/location/:locationId", async(req, res) => {
 });
 
 // 서버 실행
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
 });
