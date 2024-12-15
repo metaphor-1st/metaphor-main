@@ -13,6 +13,14 @@ function UserInfo() {
   const [selectedSex, setSelectedSex] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2024");
 
+  const handleSexSelect = sex => {
+    setSelectedSex(sex);
+  };
+  const handleYearChange = year => {
+    setSelectedYear(year);
+    console.log(selectedSex, year);
+  };
+
   const handleClick = async () => {
     const userData = {
       sex: selectedSex,
@@ -32,6 +40,7 @@ function UserInfo() {
         const responseData = await response.json(); // 서버에서 받은 데이터
         const userId = responseData.userId; // 응답에 userId 포함
         navigate(`/painInfo?userId=${userId}`); // userId를 URL로 전달
+        // console.log(userData)
       } else {
         console.error("데이터 전송 실패");
       }
@@ -39,12 +48,7 @@ function UserInfo() {
       console.error("데이터 전송 중 오류!! : ", error);
     }
   };
-  const handleSexSelect = sex => {
-    setSelectedSex(sex);
-  };
-  const handleYearChange = year => {
-    setSelectedYear(year);
-  };
+ 
   const createAge = () => {
     return Array.from({ length: 2024 - 1920 + 1 }, (_, index) =>
       (2024 - index).toString()

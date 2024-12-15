@@ -1,11 +1,11 @@
 import ProgressBar from "../../components/progressBar/progressBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import Header from "../../components/header/header";
 import "./painInfo.css";
 import Dropdown from "../../components/dropdown/Dropdown";
 import SearchBar from "../../components/searchBar/SearchBar";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+
 
 function PainInfo() {
   const [inputText, setInputText] = useState("");
@@ -34,8 +34,8 @@ function PainInfo() {
         );
 
         if (response.ok) {
-
-          navigate("/medicineInfo");
+          console.log(painData);
+          navigate(`/medicineInfo?userId=${userId}`);
         } else {
           console.error("데이터 전송 실패");
         }
@@ -47,7 +47,7 @@ function PainInfo() {
   const handleInputChange = value => {
     setInputText(value);
   };
-  const handlePainSelect = (pain) => {
+  const handlePainSelect = pain => {
     setSelectedPain(pain);
   };
   return (
