@@ -14,12 +14,15 @@ function MedicineInfo() {
   const handleClick = async () => {
     if (inputText.trim() || selectedBoolean === "no") {
       const painData = {
-        description: inputText,
+        mediTF: selectedBoolean === "yes",
+        description: inputText || "복용 중인 약물 없음", 
       };
-  
+      
+      console.log("전송할 데이터(painData):", painData);
+
       try {
         const response = await fetch(
-          `http://localhost:4000/user/${userId}/medi`, //여기 api path 추가 요망망
+          `http://localhost:4000/user/${userId}/pain/medi`, //여기 api path 추가 요망망
           {
             method: "POST",
             headers: {
