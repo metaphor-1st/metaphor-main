@@ -80,7 +80,9 @@ app.post('/user/:userId/pain', (req, res) => {
           error: `필수 필드 누락: ${missingFields.join(', ')}`,
         });
       }
-  
+      
+      console.log(painInfoRequest);   //정보 확인용
+
       res.status(201).json(painInfoRequest);
     } catch (error) {
       res.status(500).json({
@@ -89,6 +91,31 @@ app.post('/user/:userId/pain', (req, res) => {
       });
     }
   });
+
+
+//복용중인 약물 정보 생성
+app.post('/user/:userId/pain/medi', (req, res) => {
+
+  try{
+      const userId = req.params.userId;
+      const { mediTF, description } = req.body;
+      const mediInfoRequest = {
+        userId: userId,
+        mediTF: mediTF,
+        taken_medi: mediTF? description: null,
+    };
+
+    console.log(mediInfoRequest);
+
+    res.status(201).json(mediInfoRequest);
+  }catch(error){
+    res.status(500).json({
+      error: '복용중인 약물 정보 생성 중 오류 발생',
+      message: error.message,
+    });
+  }
+});
+
   
   // 약물 정보 조회
   app.get('/user/:userId/pain/medi/:mediId', (req, res) => {

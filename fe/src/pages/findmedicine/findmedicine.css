@@ -50,11 +50,64 @@
 }
 
 .SymptomList{
-    background-color: white;
-    border-radius: 1.5rem;
-    border: 1px solid #e8edfc;
-    width: 100%;
-    margin-bottom: 1rem;
-    padding: 2.2rem 1rem;
-    list-style: url("/src/images/listDot.svg");
+  background-color: white;
+  border-radius: 1.5rem;
+  border: 1px solid #e8edfc;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.SymptomList ul {
+  list-style: none;
+  padding: 1.2rem;
+}
+
+.SymptomList li {
+  position: relative;
+  padding-left: 1.5rem; 
+  margin-bottom: 0.5rem;
+}
+.SymptomList li::before {
+  content: '•'; 
+  color: #A5B8F3; 
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.CautionText {
+  color: #FE9E2A;
+  font-weight: 200;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.Precautions{
+  background-color: white;
+  border-radius: 1.5rem;
+  border: 1px solid #e8edfc;
+  width: 100%;
+margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.PrecautionsText{
+  padding: 2rem;
+}
+
+.MapBtn {
+  width: 100%;
+  background-color: #2f5ce4;
+  border: none;
+  border-radius: 3rem;
+  color: white;
+  height: 3.5rem;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
 }

@@ -14,12 +14,13 @@ function MedicineInfo() {
   const handleClick = async () => {
     if (inputText.trim() || selectedBoolean === "no") {
       const painData = {
+        mediTF: selectedBoolean === "yes",
         description: inputText,
       };
   
       try {
         const response = await fetch(
-          `http://localhost:4000/user/${userId}/medi`, //여기 api path 추가 요망망
+          `http://localhost:4000/user/${userId}/pain/medi`, 
           {
             method: "POST",
             headers: {
@@ -41,6 +42,7 @@ function MedicineInfo() {
     } else {
       console.log("입력값이 비어 있습니다.");
     }
+    // navigate("/locationInfo");
   };
   
 

@@ -1,5 +1,6 @@
 import './App.css';
 import React from 'react';
+import { Wrapper } from "@googlemaps/react-wrapper";
 
 import Home from './pages/Home';
 import PainInfo from './pages/painInfo/painInfo';
@@ -12,6 +13,7 @@ import ResultMap from './pages/resultMap/resultMap';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 function App() {
   return (
+     <Wrapper apiKey="AIzaSyAm-iHhDK_yEgJcLoxDjoab3iFxYM1caaY" libraries={"places"}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />}></Route>
@@ -21,8 +23,10 @@ function App() {
         <Route path="/locationInfo" element={<LocationInfo />}></Route>
         <Route path="/findMedicine" element={<FindMedicine />}></Route>
         <Route path="/resultMap" element={<ResultMap />}></Route>
+
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+      </Wrapper>
   );
 }
 

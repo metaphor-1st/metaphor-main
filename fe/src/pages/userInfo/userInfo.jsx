@@ -18,7 +18,7 @@ function UserInfo() {
   };
   const handleYearChange = year => {
     setSelectedYear(year);
-    console.log(selectedSex, year);
+    // console.log(selectedSex, year);
   };
 
   const handleClick = async () => {
@@ -40,7 +40,7 @@ function UserInfo() {
         const responseData = await response.json(); // 서버에서 받은 데이터
         const userId = responseData.userId; // 응답에 userId 포함
         navigate(`/painInfo?userId=${userId}`); // userId를 URL로 전달
-        // console.log(userData)
+        console.log(userData)
       } else {
         console.error("데이터 전송 실패");
       }
