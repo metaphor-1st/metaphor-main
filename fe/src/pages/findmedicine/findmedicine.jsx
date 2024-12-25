@@ -22,9 +22,13 @@ function FindMedicine() {
    const { lat, lng } = location.state || {};
 
    // 데이터를 새 페이지로 전달하는 함수
-   const handleClick = () => {
-     navigate("/resultMap", { state: { lat, lng } });
-   };
+  //  const handleClick = () => {
+  //    navigate("/resultMap", { state: { lat, lng } });
+  //  };
+
+  const handleClick = () => {
+    navigate("/");
+  };
 
   return (
     <div>
@@ -92,7 +96,7 @@ function FindMedicine() {
           </div>
         </div>
         <button onClick={handleClick} className="MapBtn">
-          다음
+          홈으로
         </button>
       </div>
     </div>

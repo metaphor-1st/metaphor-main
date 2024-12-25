@@ -13,7 +13,7 @@ function ProgressBar({ currentStep }) {
 
   return (
     <div className="ProgressBarWrap">
-      {[0, 1, 2, 3].map(stepIndex => (
+      {[0, 1, 2].map(stepIndex => (
         <div key={stepIndex} className="StepContainer">
           <div
             className="Step"
@@ -24,7 +24,7 @@ function ProgressBar({ currentStep }) {
               backgroundSize: "cover",
             }}></div>
 
-          {stepIndex < 3 && (
+          {stepIndex < 2 && (
             <img src={StepLine} alt="StepLine" className="StepLine" />
           )}
         </div>

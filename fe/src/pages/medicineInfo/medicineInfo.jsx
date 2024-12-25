@@ -22,21 +22,21 @@ function MedicineInfo() {
 
       try {
         const response = await fetch(
-          `http://localhost:4000/user/${userId}/medi`, //여기 api path 추가 요망망
+          `http://localhost:4000/user/${userId}/pain/medi`, 
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(painData), // JSON 데이터 전송
+            body: JSON.stringify(painData), 
           }
         );
   
         if (response.ok) {
           console.log(painData);
-          navigate("/locationInfo"); // 다음 페이지로 이동
+          navigate("/findMedicine"); // 다음 페이지로 이동
         } else {
-          console.error("데이터 전송 실패");
+          // console.error("데이터 전송 실패");
         }
       } catch (error) {
         console.error("데이터 전송 중 오류!! : ", error);

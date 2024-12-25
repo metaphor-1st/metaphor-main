@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './startButton.css';
-import selectedArrow from '../../images/selectedArrow.svg';
-import unselectedArrow from '../../images/unselectedArrow.svg';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./startButton.css";
+import selectedArrow from "../../images/selectedArrow.svg";
+import unselectedArrow from "../../images/unselectedArrow.svg";
 
-const StartButton = ({ type, isSelected }) => {
+const StartButton = ({ type, isSelected, userId }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
 
@@ -25,7 +25,7 @@ const StartButton = ({ type, isSelected }) => {
           <span> 약과 약국 정보를 알 수 있어요!</span>
         </>
       ),
-      link: '/userInfo',
+      link: "/userInfo",
     },
     pharmacy: {
       title: (
@@ -44,14 +44,19 @@ const StartButton = ({ type, isSelected }) => {
           <span> 약국과 재고를 알 수 있어요!</span>
         </>
       ),
-      link: '/locationInfo',
+      link: "/locationInfo",
     },
   };
 
   const currentButton = buttonCaption[type];
 
   const handleClick = () => {
-    navigate(currentButton.link);
+    // userId가 존재하면 쿼리 매개변수로 추가
+    if (userId) {
+      navigate(`${currentButton.link}?userId=${userId}`);
+    } else {
+      navigate(currentButton.link); // userId가 없으면 기본 링크로 이동
+    }
   };
 
   return (
@@ -59,15 +64,22 @@ const StartButton = ({ type, isSelected }) => {
       className="StartButtonContainer"
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div style={{ width: '100%' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+      onMouseLeave={() => setIsHovered(false)}>
+      <div style={{ width: "100%" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}>
           <p className="StartButtonTitle">{currentButton.title}</p>
           <p className="StartButtonDesc">{currentButton.desc}</p>
         </div>
         <div className="ButtonArrow">
-          <img src={isSelected || isHovered ? selectedArrow : unselectedArrow} alt="arrow" />
+          <img
+            src={isSelected || isHovered ? selectedArrow : unselectedArrow}
+            alt="arrow"
+          />
         </div>
       </div>
     </button>

@@ -26,29 +26,39 @@ function LocationInfo() {
     setShowDaumAddress(false);
   };
 
+  const handleCoordinatesUpdate = (latitude, longitude) => {
+    setCoordinates({ latitude, longitude });
+  };
+
   const handleClick = async () => {
+    if (!userId) {
+      console.error("userId가 설정되지 않았습니다.");
+      return;
+    }
+   
+    if (coordinates) {
+      navigate(`/resultMap?userId=${userId}`, { state: { ...coordinates } });
+    } else {
+      console.error("위치 정보가 설정되지 않았습니다.");
+    }
+
     if (address) {
-      const painData = {
-        userLocation: address,
-        latitude: "",
-        longitude: "",
-      };
+      const userLocation = coordinates;
 
       try {
         const response = await fetch(
-          `http://localhost:4000/user/${userId}/pain/medi`,
+          `http://localhost:4000/user/${userId}/location`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(painData), // JSON 데이터 전송
+            body: JSON.stringify(userLocation), // JSON 데이터 전송
           }
         );
 
         if (response.ok) {
-          console.log(painData);
-          navigate("/findMedicine"); // 다음 페이지로 이동
+           console.log(userId)
         } else {
           console.error("데이터 전송 실패");
         }
@@ -58,7 +68,6 @@ function LocationInfo() {
     } else {
       console.log("입력값이 비어 있습니다.");
     }
-    // navigate("/locationInfo");
   };
 
   return (
@@ -66,7 +75,6 @@ function LocationInfo() {
       <Header />
       <div className="InfoWrap">
         <h1 className="StepTitle">위치를 입력해주세요</h1>
-        <ProgressBar currentStep={3} />
         <button onClick={handleClick} className="NextBtn">
           다음
         </button>
@@ -89,9 +97,9 @@ function LocationInfo() {
       )}
       <GeoCode
         address={address}
-       userId={userId}
+        userId={userId}
+        onCoordinatesUpdate={handleCoordinatesUpdate}
       />
-     
     </>
   );
 }
