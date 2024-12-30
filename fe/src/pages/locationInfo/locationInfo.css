@@ -1,13 +1,13 @@
 .AddressSearch {
   display: flex;
   gap: 1rem;
-  margin-top: 4rem;
   width: 24rem;
   background-color: white;
   border: 1px solid #809df4;
   padding: 1rem;
   border-radius: 10px;
   cursor: pointer;
+  margin: 2rem auto;
 }
 .AddressText {
   font-family: Pretendard;
@@ -38,3 +38,10 @@ color: #767676;
   border-radius: 8px;
   position: relative;
 }
+
+@media (max-width: 600px) {
+  .AddressSearch {
+    width: 22rem;
+    }
+  }
+  

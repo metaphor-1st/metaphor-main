@@ -56,7 +56,11 @@ function ResultMap() {
       <div
         className="MapContainer"
         style={{ position: "relative", width: "100%" }}>
-        {loading ? <p>Loading map...</p> : <GoogleMap center={center} />}
+      {center ? (
+    <GoogleMap center={center} />
+  ) : (
+    <p>지도를 표시할 수 없습니다.</p>
+  )}
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>

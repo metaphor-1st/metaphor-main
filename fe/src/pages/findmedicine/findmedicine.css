@@ -8,16 +8,12 @@
   background-color: #f8f8f8;
   border-radius: 2rem;
   height: 100%;
-  width: 105%;
-  margin: 0 auto;
+  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
   margin-top: 3rem;
-  position: relative;
-  left: -10%;
-  right: -10%;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .DiseaseDisc {

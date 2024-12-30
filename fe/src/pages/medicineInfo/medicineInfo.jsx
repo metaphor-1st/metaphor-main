@@ -80,7 +80,7 @@ function MedicineInfo() {
         </div>
         {selectedBoolean === "yes" && (
           <div className="SelectYes">
-            <h1 className="SubTitle">어떤 약을 복용 중이신가요?</h1>
+            <h1 className="HiddenSubTitle">어떤 약을 복용 중이신가요?</h1>
             <SearchBar
               text={"어떤 종류의 약인지 입력해주세요 ex)항우울제"}
               onInputChange={handleInputChange}

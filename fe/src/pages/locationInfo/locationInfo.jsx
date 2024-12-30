@@ -35,7 +35,7 @@ function LocationInfo() {
       console.error("userId가 설정되지 않았습니다.");
       return;
     }
-   
+
     if (coordinates) {
       navigate(`/resultMap?userId=${userId}`, { state: { ...coordinates } });
     } else {
@@ -58,7 +58,7 @@ function LocationInfo() {
         );
 
         if (response.ok) {
-           console.log(userId)
+          console.log(userId);
         } else {
           console.error("데이터 전송 실패");
         }
@@ -73,33 +73,34 @@ function LocationInfo() {
   return (
     <>
       <Header />
+
       <div className="InfoWrap">
         <h1 className="StepTitle">위치를 입력해주세요</h1>
+        
+        <button className="AddressSearch" onClick={toggleDaumAddressOpen}>
+          <img src={searchIcon} alt="searchIcon" />
+          <span
+            className="AddressText"
+            style={{ color: address ? "#000" : "#767676" }}>
+            {address ? `${address} (${zonecode})` : "주소를 입력해주세요!"}
+          </span>
+        </button>
+        {showDaumAddress && (
+          <div className="ModalOverlay">
+            <div className="ModalContent">
+              <DaumPostcode onComplete={handleComplete} />
+            </div>
+          </div>
+        )}
+        <GeoCode
+          address={address}
+          userId={userId}
+          onCoordinatesUpdate={handleCoordinatesUpdate}
+        />
         <button onClick={handleClick} className="NextBtn">
           다음
         </button>
       </div>
-
-      <button className="AddressSearch" onClick={toggleDaumAddressOpen}>
-        <img src={searchIcon} alt="searchIcon" />
-        <span
-          className="AddressText"
-          style={{ color: address ? "#000" : "#767676" }}>
-          {address ? `${address} (${zonecode})` : "주소를 입력해주세요!"}
-        </span>
-      </button>
-      {showDaumAddress && (
-        <div className="ModalOverlay">
-          <div className="ModalContent">
-            <DaumPostcode onComplete={handleComplete} />
-          </div>
-        </div>
-      )}
-      <GeoCode
-        address={address}
-        userId={userId}
-        onCoordinatesUpdate={handleCoordinatesUpdate}
-      />
     </>
   );
 }

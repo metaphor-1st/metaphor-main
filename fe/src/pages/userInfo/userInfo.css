@@ -1,7 +1,11 @@
 .InfoWrap {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 85vh;
+  padding-bottom: 2rem;
 }
 .StepTitle {
   font-size: 1.5rem;
@@ -13,7 +17,7 @@
   font-size: 1.2rem;
   margin: 1.5rem 0;
   margin-right: auto;
-  margin-top: 5rem;
+  margin-top: 3rem;
 }
 .SexBtnWrap {
   display: flex;
@@ -48,9 +52,10 @@
 .AgeDropDown {
   margin-right: auto;
 }
+
 .NextBtn {
-  position: fixed;
-  bottom: 5rem;
+  align-self: center; /* 버튼을 중앙에 정렬 */
+  margin-top: auto; /* 상단 콘텐츠와 공간 확보 */
   width: 24rem;
   background-color: #2f5ce4;
   border: none;
@@ -60,12 +65,11 @@
   font-weight: 500;
   font-size: 16px;
   cursor: pointer;
- 
 }
 .NextBtn.unselected {
-    background-color: #E0E0E0;
-    cursor: not-allowed;
-  }
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
 
 @media screen and (max-width: 400px) {
   .SexBtn {

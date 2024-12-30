@@ -41,9 +41,7 @@ const GeoCode = ({ address, onCoordinatesUpdate }) => {
 
   return (
     <div>
-      {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p>위도와 경도 변환이 완료되었습니다!</p>}
     </div>
   );
 };

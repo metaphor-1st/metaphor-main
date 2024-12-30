@@ -4,6 +4,7 @@
   justify-content: center;
   gap: 2rem;
   margin-top: 5rem;
+  margin-bottom:2rem ;
 }
 
 .BooleanBtn {
@@ -26,5 +27,11 @@
 }
 
 .SelectYes {
+    margin-right: auto;
+}
+
+.HiddenSubTitle{
+  font-size: 1.2rem;
+    margin: 1.5rem 0;
     margin-right: auto;
 }

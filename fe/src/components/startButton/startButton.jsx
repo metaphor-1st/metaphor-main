@@ -65,22 +65,15 @@ const StartButton = ({ type, isSelected, userId }) => {
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
-      <div style={{ width: "100%" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-          }}>
-          <p className="StartButtonTitle">{currentButton.title}</p>
-          <p className="StartButtonDesc">{currentButton.desc}</p>
-        </div>
-        <div className="ButtonArrow">
-          <img
-            src={isSelected || isHovered ? selectedArrow : unselectedArrow}
-            alt="arrow"
-          />
-        </div>
+      <div className="StartButtonText">
+        <p className="StartButtonTitle">{currentButton.title}</p>
+        <p className="StartButtonDesc">{currentButton.desc}</p>
+      </div>
+      <div className="ButtonArrow">
+        <img
+          src={isSelected || isHovered ? selectedArrow : unselectedArrow}
+          alt="arrow"
+        />
       </div>
     </button>
   );

@@ -1,112 +1,89 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { GoogleMap, LoadScript  } from "@react-google-maps/api";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
 const PharmacyMap = ({ center }) => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
-  const serviceRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const initMap = useCallback(async () => {
-    if (!center) return;
+  const initMap = useCallback(() => {
+    if (!center || !mapRef.current || !window.google || !window.google.maps) {
+      setErrorMessage("Google Maps API 또는 center가 유효하지 않습니다.");
+      console.error("Google Maps API 또는 center가 유효하지 않습니다.");
+      return;
+    }
 
     try {
-      if (!mapInstanceRef.current) {
-        const map = new window.google.maps.Map(mapRef.current, {
-          center: center,
-          zoom: 15,
-          mapId: "c33ab4049d3aa7ca",
+      // 지도 초기화
+      const map = new window.google.maps.Map(mapRef.current, {
+        center: center,
+        zoom: 13,
+      });
+      mapInstanceRef.current = map;
+
+      // PlacesService 초기화
+      if (window.google.maps.places) {
+        const service = new window.google.maps.places.PlacesService(map);
+        const request = {
+          location: center, // { lat, lng } 형식
+          radius: 5000, // 반경 (미터 단위)
+          type: "pharmacy", // 장소 유형
+        };
+
+        service.nearbySearch(request, (results, status) => {
+          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            results.forEach(place => {
+              // 마커 추가
+              new window.google.maps.Marker({
+                map,
+                position: place.geometry.location,
+                title: place.name,
+              });
+            });
+          } else if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+            setErrorMessage("반경 5km 내 약국을 찾을 수 없습니다.");
+            console.warn("No results found within the specified radius.");
+          } else if (status === window.google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
+            setErrorMessage("API 요청 한도를 초과했습니다. 나중에 다시 시도하세요.");
+            console.error("API 요청 한도 초과:", status);
+          } else if (status === window.google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
+            setErrorMessage("API 요청이 거부되었습니다. API 키 설정을 확인하세요.");
+            console.error("API 요청 거부:", status);
+          } else if (status === window.google.maps.places.PlacesServiceStatus.INVALID_REQUEST) {
+            setErrorMessage("잘못된 요청입니다. 요청 매개변수를 확인하세요.");
+            console.error("잘못된 요청:", status);
+          } else {
+            setErrorMessage(`PlacesService 오류: ${status}`);
+            console.error(`PlacesService 오류: ${status}`);
+          }
         });
-
-        mapInstanceRef.current = map;
-
-        const mapPin = "../../cautionIcon.svg";
-        new window.google.maps.Marker({
-          map,
-          position: center,
-          title: "Pharmacy Location",
-          icon: mapPin,
-        });
-
-        serviceRef.current = new window.google.maps.places.PlacesService(map);
-
-        searchNearbyPharmacies(center);
       } else {
-        mapInstanceRef.current.setCenter(center);
-        searchNearbyPharmacies(center);
+        setErrorMessage("Google Places API가 로드되지 않았습니다.");
+        console.error("Google Places API가 로드되지 않았습니다.");
       }
     } catch (error) {
-      console.error("맵 로드 / 마커 오류:", error);
-      setErrorMessage("맵 로드에 실패했습니다.");
+      setErrorMessage("맵 초기화 중 오류가 발생했습니다.");
+      console.error("Error initializing map:", error);
     }
   }, [center]);
 
-  const searchNearbyPharmacies = useCallback(location => {
-    if (!serviceRef.current || !location) return;
-
-    const request = {
-      location: location,
-      radius: 5000,
-      type: ["pharmacy"],
-    };
-
-    serviceRef.current.nearbySearch(request, (results, status) => {
-      if (
-        status === window.google.maps.places.PlacesServiceStatus.OK &&
-        results
-      ) {
-        results.forEach(place => {
-          try {
-            new window.google.maps.Marker({
-              map: mapInstanceRef.current,
-              position: place.geometry.location,
-              title: place.name,
-            });
-          } catch (markerError) {
-            console.error(
-              "마커 찍기 실패 :",
-              place.name,
-              markerError
-            );
-          }
-        });
-      } else if (
-        status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS
-      ) {
-        setErrorMessage("반경 1km에 약국이 없습니다.");
-        console.warn("반경 1km에 약국이 없습니다.");
-      } else if (
-        status === window.google.maps.places.PlacesServiceStatus.INVALID_REQUEST
-      ) {
-        setErrorMessage("요청 오류 : 위치나 props를 확인해주세요");
-        console.error(
-          "요청 오류 : 위치나 props를 확인해주세요"
-        );
-      } else {
-        setErrorMessage(
-          "Fetch 오류"
-        );
-        console.error("Fetch 오류:", status);
-      }
-    });
-  }, []);
-
   useEffect(() => {
-    initMap();
+    if (window.google && window.google.maps) {
+      if (mapRef.current && mapRef.current instanceof Element) {
+        initMap();
+      } else {
+        console.error("mapRef가 유효한 DOM 요소로 초기화되지 않았습니다.");
+      }
+    } else {
+      console.error("Google Maps API가 로드되지 않았습니다.");
+    }
   }, [initMap]);
-
+  
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}>
-      <div>
-        <div
-          id="map"
-          style={{ height: "50rem", width: "100%" }}
-          ref={mapRef}></div>
-        {errorMessage && (
-          <p style={{ color: "red", marginTop: "1rem" }}>{errorMessage}</p>
-        )}
-      </div>
-    </LoadScript>
+    <div style={{ height: "50rem", width: "100%" }} ref={mapRef}>
+      {errorMessage && (
+        <p style={{ color: "red", marginTop: "1rem" }}>{errorMessage}</p>
+      )}
+    </div>
   );
 };
 

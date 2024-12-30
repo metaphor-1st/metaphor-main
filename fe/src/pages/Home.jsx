@@ -49,10 +49,10 @@ export default function Home() {
       </p>
       <img className="DrugImg" src={drug}></img>
       <div className="ButtonContainer">
-        <div style={{ paddingBottom: "5rem", width: "90%" }}>
+
           <StartButton type="medicine" />
           <StartButton type="pharmacy" userId={userId} />
-        </div>
+
       </div>
     </div>
   );

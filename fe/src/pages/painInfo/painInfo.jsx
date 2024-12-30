@@ -56,8 +56,7 @@ function PainInfo() {
       <div className="InfoWrap">
         <h1 className="StepTitle">어디가 불편하세요?</h1>
         <ProgressBar currentStep={1} />
-      </div>
-      <div className="PainInputWrap">
+        <div className="PainInputWrap">
         <div style={{ padding: "1.25rem 0rem" }}>
           <text className="PainText">증상을 선택해주세요</text>
         </div>
@@ -82,6 +81,8 @@ function PainInfo() {
         disabled={!inputText.trim()}>
         다음
       </button>
+      </div>
+      
     </div>
   );
 }

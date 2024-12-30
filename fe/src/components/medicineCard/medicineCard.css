@@ -4,7 +4,7 @@
   background-color: white;
   border-radius: 1.5rem;
   border: 1px solid #e8edfc;
-  width: 95%;
+  width: 90%;
   padding: 1rem;
   margin-bottom: 1rem;
 }
@@ -33,7 +33,7 @@
 
 .MedicineLine {
   position: absolute;
-  width: 62%;
+  width: 58%;
   top: 40px;
   left: 120px;
   height: 0.15rem;

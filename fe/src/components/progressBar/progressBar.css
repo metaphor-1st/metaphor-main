@@ -2,8 +2,6 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  justify-content: space-between;
-  gap: 0.5rem;
 }
 
 .ProgressBarWrap .Step {
@@ -25,21 +23,12 @@
 }
 
 .StepLine {
-    width: 10.2rem;
+  width: 10rem;
   }
 
-
 @media (max-width: 600px) {
-    .ProgressBarWrap {
-      gap: 1rem; /* Increase space between steps */
-      padding: 0 1rem; /* Add padding to prevent content touching screen edges */
-    }
-  
-    .Step {
-      width: 8vw; /* Increase step size on small screens */
-      height: 8vw; /* Increase height to keep proportions */
-      max-width: 2rem; /* Restrict maximum size */
-      max-height: 2rem; /* Restrict maximum size */
+  .StepLine {
+    width: 8rem;
     }
   }
   
