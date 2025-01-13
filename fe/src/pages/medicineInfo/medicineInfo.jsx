@@ -18,8 +18,27 @@ function MedicineInfo() {
         description: inputText || "복용 중인 약물 없음", 
       };
       
-      console.log("전송할 데이터(painData):", painData);
+      console.log("전송할 데이터(medicineData):", painData);
+      sessionStorage.setItem('medicineData', JSON.stringify(painData));   //클라이언트사이드 세션에 저장
+      
+      
+      //모든 정보 통합
+      //세션 스토리지에서 모든 데이터 가져오기
+      const userData = JSON.parse(sessionStorage.getItem('userData'));
+      const painData_real = JSON.parse(sessionStorage.getItem('painData'));
+      const medicineData = JSON.parse(sessionStorage.getItem('medicineData'));
 
+      //모든 데이터를 하나의 객체로 통합
+      const allData = {
+        userData,
+        painData_real,
+        medicineData
+      };
+      
+     // 홈으로 갈때 sessionStorage.clear(); 코드 필요
+      
+      
+      
       try {
         const response = await fetch(
           `http://localhost:4000/user/${userId}/pain/medi`, 
@@ -28,12 +47,13 @@ function MedicineInfo() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(painData), 
+            body: JSON.stringify(allData), //painData를 allData로 바꿈
           }
         );
   
         if (response.ok) {
           console.log(painData);
+          console.log(allData);       //확인용
           navigate("/findMedicine"); // 다음 페이지로 이동
         } else {
           // console.error("데이터 전송 실패");

@@ -38,6 +38,7 @@ function UserInfo() {
 
       if (response.ok) {
         const responseData = await response.json(); // 서버에서 받은 데이터
+        sessionStorage.setItem('userData', JSON.stringify(responseData));
         const userId = responseData.userId; // 응답에 userId 포함
         navigate(`/painInfo?userId=${userId}`); // userId를 URL로 전달
         console.log(userData)

@@ -35,6 +35,7 @@ function PainInfo() {
 
         if (response.ok) {
           console.log(painData);
+          sessionStorage.setItem('painData', JSON.stringify(painData));
           navigate(`/medicineInfo?userId=${userId}`);
         } else {
           console.error("데이터 전송 실패");
