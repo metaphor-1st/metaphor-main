@@ -1,0 +1,30 @@
+### model test
+POST http://localhost:5000/predict
+Content-Type: application/json
+
+{
+  "text" : "머리가 아프고 열이 나요" 
+}
+
+
+### model test-2
+POST http://localhost:5000/predict
+Content-Type: application/json
+
+{
+  "birthDate": "19900101",
+  "category": "소화기",
+  "symptomText": "소화가 안되고 가스가 차요"
+}
+
+
+
+### 모델연결 test
+POST http://localhost:4000/user/b5fef10a-8dd1-42bb-b665-8dbac3ebdb3f/result
+Content-Type: application/json
+
+{
+  "sex": "male",
+  "bornYear": "2002",
+  "description" : "소화가 안되고 가스가 차요" 
+}

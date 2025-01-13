@@ -1,22 +1,28 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
+import axios from 'axios'; 
 import cors from "cors";
 
 import { v4 as uuidv4 } from "uuid"; // uuid 모듈 불러오기
+
+import { spawn } from 'child_process';      //파이썬 서버 돌리기위한 import 
 
 // Prisma 클라이언트 초기화
 const prisma = new PrismaClient();
 
 // 환경 변수 로드
 dotenv.config();
+
 const app = express();
+
 
 app.use(cors());
 
 //req.body와 POST 요청을 해석하기 위한 설정
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 //뷰 엔진 설정
 //app.set("views", __dirname + "/views");         //뷰 디렉터리를 views로 설정
@@ -26,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.render("home");
 });
+
 
 // 사용자 정보 생성
 app.post("/user", (req, res) => {
@@ -45,7 +52,6 @@ app.post("/user", (req, res) => {
         error: "출생년도는 필수 입력 항목입니다.",
       });
     }
-
     res.status(201).json(userInfoRequest);
   } catch (error) {
     console.error("Error:", error);
@@ -78,7 +84,6 @@ app.post("/user/:userId/pain", (req, res) => {
     }
 
     console.log(painInfoRequest); //정보 확인용
-
     res.status(201).json(painInfoRequest);
   } catch (error) {
     res.status(500).json({
@@ -136,6 +141,64 @@ app.get("/user/:userId/pain/medi/:mediId", (req, res) => {
   }
 });
 
+//파이썬 서버
+let pythonServer;
+
+function startPythonServer() {
+  pythonServer = spawn('python', ['utils/model_connection.py']);
+
+  pythonServer.stdout.on('data', (data) => {
+    console.log(`Python server output: ${data}`);
+  });
+
+  pythonServer.stderr.on('data', (data) => {
+    console.error(`Python server error: ${data}`);
+  });
+
+  pythonServer.on('close', (code) => {
+    console.log(`Python server exited with code ${code}`);
+  });
+}
+
+// Node.js 서버 시작 시 Python 서버 실행
+startPythonServer();
+
+//결과 조회화면 - 모델에 요청보내기
+app.post("/user/:userId/pain/medi", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const allData = req.body;
+
+    // Python 스크립트 실행 및 결과 수신
+    const modelResult = await sendToModel(allData);
+
+    console.log(modelResult); // 점검용
+
+
+    // 2. 결과를 프론트엔드로 전송
+    res.json({ success: true, result: modelResult });
+  } catch (error) {
+    console.error('Error processing result:', error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+});
+
+async function sendToModel(allData) {
+  const modelApiUrl = 'http://localhost:5000/predict'; // 모델 API 주소
+  const response = await axios.post(modelApiUrl, allData);
+  return response.data;
+}
+
+
+// Node.js 서버 종료 시 Python 서버도 종료
+process.on('exit', () => {
+  if (pythonServer) {
+    pythonServer.kill();
+  }
+});
+
+
+/*
 // 약물 세부 정보 조회
 app.get("/user/:userId/pain/medi/:mediId/pill/:pillId", (req, res) => {
   try {
@@ -162,6 +225,8 @@ app.get("/user/:userId/pain/medi/:mediId/pill/:pillId", (req, res) => {
     });
   }
 });
+
+*/
 
 // 위치 데이터 저장소
 let userLocationData = {};
@@ -202,6 +267,8 @@ app.get("/user/:userId/location", (req, res) => {
   res.status(200).json(userLocationData[userId]);
 });
 
+
+/*
 //특정 약물 ID로 약물 위치 조회
 app.post("/map/pill/:pillId", async (req, res) => {
   //pillID 선택함
@@ -265,6 +332,8 @@ app.get("/map/medi/:mediId/location/:locationId", async (req, res) => {
       .send({ error: "An error occurred while retrieving location data" });
   }
 });
+*/
+
 
 // 서버 실행
 const PORT = process.env.PORT || 4000;
