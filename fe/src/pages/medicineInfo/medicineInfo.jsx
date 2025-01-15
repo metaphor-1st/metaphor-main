@@ -11,34 +11,26 @@ function MedicineInfo() {
   const location = useLocation();
   const userId = new URLSearchParams(location.search).get("userId");
 
+  
   const handleClick = async () => {
     if (inputText.trim() || selectedBoolean === "no") {
-      const painData = {
+      const mediData = {
         mediTF: selectedBoolean === "yes",
         description: inputText || "복용 중인 약물 없음", 
       };
       
-      console.log("전송할 데이터(medicineData):", painData);
-      sessionStorage.setItem('medicineData', JSON.stringify(painData));   //클라이언트사이드 세션에 저장
+      console.log("전송할 데이터(medicineData):", mediData);
+      sessionStorage.setItem('medicineData', JSON.stringify(mediData));   //클라이언트사이드 세션에 저장
       
       
       //모든 정보 통합
       //세션 스토리지에서 모든 데이터 가져오기
       const userData = JSON.parse(sessionStorage.getItem('userData'));
-      const painData_real = JSON.parse(sessionStorage.getItem('painData'));
+      const painData = JSON.parse(sessionStorage.getItem('painData'));
       const medicineData = JSON.parse(sessionStorage.getItem('medicineData'));
+      
 
-      //모든 데이터를 하나의 객체로 통합
-      const allData = {
-        userData,
-        painData_real,
-        medicineData
-      };
-      
-     // 홈으로 갈때 sessionStorage.clear(); 코드 필요
-      
-      
-      
+     
       try {
         const response = await fetch(
           `http://localhost:4000/user/${userId}/pain/medi`, 
@@ -47,13 +39,17 @@ function MedicineInfo() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(allData), //painData를 allData로 바꿈
+            body: JSON.stringify({
+              userId: userId,
+              mediTF: mediData.mediTF,
+              taken_medi: mediData.mediTF ? mediData.description : null,
+            }), 
           }
         );
   
         if (response.ok) {
-          console.log(painData);
-          console.log(allData);       //확인용
+
+          console.log("데이터 전송 성공:", mediData);
           navigate("/findMedicine"); // 다음 페이지로 이동
         } else {
           // console.error("데이터 전송 실패");
@@ -64,7 +60,7 @@ function MedicineInfo() {
     } else {
       console.log("입력값이 비어 있습니다.");
     }
-    // navigate("/locationInfo");
+
   };
   
 
@@ -107,11 +103,15 @@ function MedicineInfo() {
             />
           </div>
         )}
-        <button
-          onClick={handleClick}
-          className={`NextBtn ${!selectedBoolean ? "unselected" : ""}`}>
-          다음
-        </button>
+       <button
+  onClick={handleClick}
+  className={`NextBtn ${
+    (selectedBoolean === "yes" && !inputText.trim()) || !selectedBoolean ? "unselected" : ""
+  }`}
+  disabled={(selectedBoolean === "yes" && !inputText.trim()) || !selectedBoolean}>
+  다음
+</button>
+
       </div>
     </div>
   );

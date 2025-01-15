@@ -19,6 +19,7 @@ const GeoCode = ({ address, onCoordinatesUpdate }) => {
       if (data.status === "OK" && data.results.length > 0) {
         const location = data.results[0].geometry.location;
         console.log("Coordinates:", location);
+        sessionStorage.setItem('LocationData', JSON.stringify(location));   //클라이언트사이드 세션에 저장
         onCoordinatesUpdate(location.lat, location.lng);
         return; // 성공 시 실행 종료
 

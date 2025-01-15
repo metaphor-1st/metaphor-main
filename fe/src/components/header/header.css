@@ -1,8 +1,14 @@
 .HeaderWrap {
-    display: flex;
-    align-items: center;
-    height: 5rem;
+  display: flex;
+  align-items: center;
+  height: 5rem;
 }
 .HeaderWrap img {
-    height: 1.5rem;
+  height: 1.5rem;
+}
+
+@media screen and (max-width: 480px) {
+  .HeaderWrap {
+    padding-left: 2rem;
+  }
 }

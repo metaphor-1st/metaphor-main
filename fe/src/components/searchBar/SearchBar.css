@@ -5,9 +5,16 @@
   font-style: normal;
 }
 
+.searchBarWrap {
+  width: 100%;
+  max-width: 28rem; /* 부모 요소에 최대 너비 제한 */
+  position: relative;
+}
+
 .searchBar-container{
   display: flex;
-  width: 24rem;
+  width: 100%;
+  max-width: 28rem; 
   padding: 0.9375rem 1.25rem;
   align-items: center;
   gap: 0.625rem;
@@ -23,7 +30,7 @@
   flex-shrink: 0;
 }
 
-.searchBar-input{
+.searchBar-input {
   width: 100%;
   border: none;
   outline: none;
@@ -32,7 +39,7 @@
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.5rem; /* 150% */
+  line-height: 1.5rem;
 }
 
 
@@ -45,9 +52,13 @@
   line-height: 1.5rem; /* 150% */
 }
 
-@media (max-width: 600px) {
-  .searchBar-container {
-    width: 20rem;
+@media (max-width: 480px) {
+  .searchBarWrap {
+    max-width: 20rem;
+    
+    }
+    .searchBar-container {
+      max-width: 20rem;
     }
   }
   

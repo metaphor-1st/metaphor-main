@@ -11,17 +11,19 @@ import MImg from "../../images/manImg.svg";
 function UserInfo() {
   const navigate = useNavigate();
   const [selectedSex, setSelectedSex] = useState(null);
-  const [selectedYear, setSelectedYear] = useState("2024");
+  const [selectedYear, setSelectedYear] = useState(null); // 기본값을 null로 설정
 
-  const handleSexSelect = sex => {
+  const handleSexSelect = (sex) => {
     setSelectedSex(sex);
   };
-  const handleYearChange = year => {
+
+  const handleYearChange = (year) => {
     setSelectedYear(year);
-    // console.log(selectedSex, year);
   };
 
   const handleClick = async () => {
+    if (!selectedYear) return; // 선택된 연도가 없으면 실행하지 않음
+
     const userData = {
       sex: selectedSex,
       bornYear: selectedYear,
@@ -38,10 +40,9 @@ function UserInfo() {
 
       if (response.ok) {
         const responseData = await response.json(); // 서버에서 받은 데이터
-        sessionStorage.setItem('userData', JSON.stringify(responseData));
+        sessionStorage.setItem("userData", JSON.stringify(responseData));
         const userId = responseData.userId; // 응답에 userId 포함
         navigate(`/painInfo?userId=${userId}`); // userId를 URL로 전달
-        console.log(userData)
       } else {
         console.error("데이터 전송 실패");
       }
@@ -49,12 +50,13 @@ function UserInfo() {
       console.error("데이터 전송 중 오류!! : ", error);
     }
   };
- 
+
   const createAge = () => {
     return Array.from({ length: 2024 - 1920 + 1 }, (_, index) =>
       (2024 - index).toString()
     );
   };
+
   return (
     <div>
       <Header />
@@ -66,13 +68,13 @@ function UserInfo() {
           <button
             className={`SexBtn ${selectedSex === "female" ? "selected" : ""}`}
             onClick={() => handleSexSelect("female")}>
-            <img src={WImg}></img>
+            <img src={WImg} alt="woman" />
             여성
           </button>
           <button
             className={`SexBtn ${selectedSex === "male" ? "selected" : ""}`}
             onClick={() => handleSexSelect("male")}>
-            <img src={MImg}></img>
+            <img src={MImg} alt="man" />
             남성
           </button>
         </div>
@@ -80,14 +82,17 @@ function UserInfo() {
         <div className="AgeDropDown">
           <Dropdown
             options={createAge()}
-            defaultValue={selectedYear}
+            defaultValue="연도 선택하기"
             onChange={handleYearChange}
           />
         </div>
 
         <button
           onClick={handleClick}
-          className={`NextBtn ${!selectedSex ? "unselected" : ""}`}>
+          disabled={!selectedYear || !selectedSex} // 기본값이거나 선택되지 않으면 버튼 비활성화
+          className={`NextBtn ${
+            !selectedYear || !selectedSex ? "unselected" : ""
+          }`}>
           다음
         </button>
       </div>

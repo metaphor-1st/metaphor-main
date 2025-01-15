@@ -9,5 +9,6 @@
 }
 
 .PainInputWrap {
-
+position: relative;
+width: 100%;
 }

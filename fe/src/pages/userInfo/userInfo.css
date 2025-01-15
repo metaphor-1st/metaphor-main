@@ -6,6 +6,7 @@
   justify-content: space-between;
   min-height: 85vh;
   padding-bottom: 2rem;
+
 }
 .StepTitle {
   font-size: 1.5rem;
@@ -22,6 +23,7 @@
 .SexBtnWrap {
   display: flex;
   gap: 1.5rem;
+  justify-content: center;
 }
 .SexBtn {
   width: 13.3rem;
@@ -71,7 +73,11 @@
   cursor: not-allowed;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 480px) {
+  .InfoWrap {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
   .SexBtn {
     max-width: 10rem;
     width: 10rem;

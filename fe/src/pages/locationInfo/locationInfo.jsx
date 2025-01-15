@@ -14,8 +14,6 @@ function LocationInfo() {
   const [zonecode, setZonecode] = useState("");
   const [coordinates, setCoordinates] = useState(null);
   const location = useLocation();
-  const userId = new URLSearchParams(location.search).get("userId");
-
   const toggleDaumAddressOpen = () => {
     setShowDaumAddress(true);
   };
@@ -31,13 +29,9 @@ function LocationInfo() {
   };
 
   const handleClick = async () => {
-    if (!userId) {
-      console.error("userId가 설정되지 않았습니다.");
-      return;
-    }
 
     if (coordinates) {
-      navigate(`/resultMap?userId=${userId}`, { state: { ...coordinates } });
+      navigate(`/resultMap`, { state: { ...coordinates } });
     } else {
       console.error("위치 정보가 설정되지 않았습니다.");
     }
@@ -47,7 +41,7 @@ function LocationInfo() {
 
       try {
         const response = await fetch(
-          `http://localhost:4000/user/${userId}/location`,
+          `http://localhost:4000/user/location`,
           {
             method: "POST",
             headers: {
@@ -58,7 +52,8 @@ function LocationInfo() {
         );
 
         if (response.ok) {
-          console.log(userId);
+          console.log(userLocation)
+         
         } else {
           console.error("데이터 전송 실패");
         }
@@ -94,7 +89,6 @@ function LocationInfo() {
         )}
         <GeoCode
           address={address}
-          userId={userId}
           onCoordinatesUpdate={handleCoordinatesUpdate}
         />
         <button onClick={handleClick} className="NextBtn">

@@ -13,28 +13,16 @@ function ResultMap() {
   const userId = new URLSearchParams(location.search).get("userId");
 
   const fetchCoordinates = async () => {
-    const backendUrl = `http://localhost:4000/user/${userId}/location`;
-
     try {
       setLoading(true); // 로딩 시작
-      const response = await fetch(backendUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
 
-      if (!response.ok) {
-        throw new Error("데이터를 받지 못했습니다");
-      }
+      const LocationData = JSON.parse(sessionStorage.getItem("LocationData"));
+console.log(LocationData)
+      const { lat, lng } = LocationData;
 
-      const data = await response.json();
-
-      const { latitude, longitude } = data;
-
-      if (latitude && longitude) {
-        setCenter({ lat: latitude, lng: longitude }); // GoogleMap의 center로 설정
-        console.log("Updated center:", { lat: latitude, lng: longitude });
+      if (lat && lng) {
+        setCenter({ lat: lat, lng: lng }); // GoogleMap의 center로 설정
+        console.log("Updated center:", { lat: lat, lng: lng });
       } else {
         throw new Error("Invalid data received from backend");
       }
@@ -56,11 +44,11 @@ function ResultMap() {
       <div
         className="MapContainer"
         style={{ position: "relative", width: "100%" }}>
-      {center ? (
-    <GoogleMap center={center} />
-  ) : (
-    <p>지도를 표시할 수 없습니다.</p>
-  )}
+        {center ? (
+          <GoogleMap center={center} />
+        ) : (
+          <p>지도를 표시할 수 없습니다.</p>
+        )}
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>

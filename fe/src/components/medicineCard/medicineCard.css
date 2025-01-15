@@ -17,14 +17,24 @@
   min-width: 6.5rem;
   min-height: 6.5rem;
 }
-
+.ImgBox img {
+  width: 100%;          
+  max-width: 150px;     
+  height: auto;         
+  object-fit: cover;    
+}
+.MedicineBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 1.5rem;
+}
 .MedicineName {
   display: flex;
-  margin-left: 1.5rem;
+
   font-size: 1.5rem;
   font-weight: 500;
   margin-top: 0.5rem;
-  margin-bottom: 1rem;
   justify-content: space-between;
 }
 .MedicineNam:last-child {
@@ -32,19 +42,17 @@
 }
 
 .MedicineLine {
-  position: absolute;
-  width: 58%;
-  top: 40px;
-  left: 120px;
+width: 20rem;
   height: 0.15rem;
   background-color: #eeeeee;
   border-radius: 1rem;
-  margin: 1rem 1.3rem;
+  margin: 0.5rem 0;
+
 }
 .MedicineContent {
   display: flex;
   gap: 1rem;
-  margin-left: 1.5rem;
+
 }
 .MedicineInfo {
   color: #9e9e9e;

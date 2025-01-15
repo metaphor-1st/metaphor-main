@@ -38,10 +38,10 @@ const StartButton = ({ type, isSelected, userId }) => {
       desc: (
         <>
           <span>
-            찾으려는 약의 이름을 입력하며, 해당 약을 가진 근처
+            현재 위치를 기준으로
             <br />
           </span>
-          <span> 약국과 재고를 알 수 있어요!</span>
+          <span> 근처 약국 정보를 알 수 있어요!</span>
         </>
       ),
       link: "/locationInfo",

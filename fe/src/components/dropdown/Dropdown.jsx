@@ -13,7 +13,7 @@ function Dropdown({ options, defaultValue, onChange  }) {
     setIsOpen(false);
 
     if (onChange) {
-      onChange(option); // 부모 컴포넌트로 값 전달
+      onChange(option !== defaultValue ? option : null); // 기본값이면 null 전달
     }
   };
 

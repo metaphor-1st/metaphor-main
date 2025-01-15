@@ -1,11 +1,10 @@
 import ProgressBar from "../../components/progressBar/progressBar";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../../components/header/header";
 import "./painInfo.css";
 import Dropdown from "../../components/dropdown/Dropdown";
 import SearchBar from "../../components/searchBar/SearchBar";
 import { useState } from "react";
-
 
 function PainInfo() {
   const [inputText, setInputText] = useState("");
@@ -35,7 +34,7 @@ function PainInfo() {
 
         if (response.ok) {
           console.log(painData);
-          sessionStorage.setItem('painData', JSON.stringify(painData));
+          sessionStorage.setItem("painData", JSON.stringify(painData));
           navigate(`/medicineInfo?userId=${userId}`);
         } else {
           console.error("데이터 전송 실패");
@@ -58,32 +57,33 @@ function PainInfo() {
         <h1 className="StepTitle">어디가 불편하세요?</h1>
         <ProgressBar currentStep={1} />
         <div className="PainInputWrap">
-        <div style={{ padding: "1.25rem 0rem" }}>
-          <text className="PainText">증상을 선택해주세요</text>
+          <div style={{ padding: "1.25rem 0rem" }}>
+            <text className="PainText">증상을 선택해주세요</text>
+          </div>
+          <Dropdown
+            options={["복통", "두통", "호흡기질환"]}
+            defaultValue={"통증"}
+            onChange={handlePainSelect}
+          />
         </div>
-        <Dropdown
-          options={["복통", "두통", "호흡기질환"]}
-          defaultValue={"통증"}
-          onChange={handlePainSelect}
-        />
-      </div>
-      <div className="PainInputWrap">
-        <div style={{ padding: "1.25rem 0rem" }}>
-          <text className="PainText">정확한 증상을 입력해주세요</text>
+        <div className="PainInputWrap">
+          <div style={{ padding: "1.25rem 0rem" }}>
+            <text className="PainText">정확한 증상을 입력해주세요</text>
+          </div>
+          <SearchBar
+            text={"머리가 지끈지끈 아파요"}
+            onInputChange={handleInputChange}
+          />
         </div>
-        <SearchBar
-          text={"머리가 지끈지끈 아파요"}
-          onInputChange={handleInputChange}
-        />
+        <button
+          onClick={handleClick}
+          className={`NextBtn ${
+            !inputText.trim() || selectedPain === "통증" ? "unselected" : ""
+          }`}
+          disabled={!inputText.trim() || selectedPain === "통증"}>
+          다음
+        </button>
       </div>
-      <button
-        onClick={handleClick}
-        className={`NextBtn ${!inputText.trim() ? "unselected" : ""}`}
-        disabled={!inputText.trim()}>
-        다음
-      </button>
-      </div>
-      
     </div>
   );
 }

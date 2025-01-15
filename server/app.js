@@ -100,7 +100,7 @@ app.post("/user/:userId/pain/medi", (req, res) => {
     const { mediTF, description } = req.body;
     const mediInfoRequest = {
       userId: userId,
-      mediTF: mediTF,
+      mediTF: mediTF ?? false, // undefined 방지
       taken_medi: mediTF ? description : null,
     };
 
@@ -232,40 +232,20 @@ app.get("/user/:userId/pain/medi/:mediId/pill/:pillId", (req, res) => {
 let userLocationData = {};
 
 // 위치 데이터 저장 
-app.post("/user/:userId/location", (req, res) => {
-  const { userId } = req.params;
+app.post("/user/location", (req, res) => {
   const { latitude, longitude } = req.body;
 
   console.log("Received data:", req.body);
 
-  if (!userId) {
-    console.error("userId가 누락되었습니다.");
-    return res.status(400).json({ error: "userId가 누락되었습니다." });
-  }
 
   if (latitude === undefined || longitude === undefined) {
     console.error("요청 데이터가 유효하지 않습니다:", req.body);
     return res.status(400).json({ error: "요청 데이터가 유효하지 않습니다." });
   }
 
-
-  // 데이터 저장
-  userLocationData[userId] = { latitude, longitude };
-  console.log(`데이터 저장 완료:`, userLocationData[userId]);
-
-  res.status(200).json({ message: "위치 데이터 저장 성공" });
 });
 
-// 위치 데이터 조회 
-app.get("/user/:userId/location", (req, res) => {
-  const { userId } = req.params;
 
-  if (!userLocationData[userId]) {
-    return res.status(404).json({ error: "데이터를 찾을 수 없습니다" });
-  }
-
-  res.status(200).json(userLocationData[userId]);
-});
 
 
 /*

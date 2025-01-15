@@ -12,7 +12,7 @@ function SearchBar({text, onInputChange}) {
   };
 
   return (
-    <div>
+    <div className="searchBarWrap">
       <label className="searchBar-container">
         <input
           className="searchBar-input"

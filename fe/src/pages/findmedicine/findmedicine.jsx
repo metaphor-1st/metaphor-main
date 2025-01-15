@@ -1,30 +1,16 @@
-import axios from "../../axiosInstance";
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Wrapper } from "@googlemaps/react-wrapper";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/header";
 import "./findmedicine.css";
 import MedicineCard from "../../components/medicineCard/medicineCard";
-import Medicine1 from "../../images/타이레놀.png";
-import Medicine2 from "../../images/마이드린.png";
-import Medicine3 from "../../images/낙센.png";
 import CautionIcon from "../../images/cautionIcon.svg";
 
 function FindMedicine() {
-  const location = useLocation();
   const navigate = useNavigate();
 
   const diseaseName = "편두통";
   const DiseaseDisc =
     "일반적으로 12세 미만의 어린이에게는 권장되지 않습니다. 12세 이상일 경우, 성인 용량의 절반 정도를 투여할 수 있으나, 정확한 용량은 의사와 상담 후 결정해야 합니다.";
-
-   // 전달받은 데이터
-   const { lat, lng } = location.state || {};
-
-   // 데이터를 새 페이지로 전달하는 함수
-  //  const handleClick = () => {
-  //    navigate("/resultMap", { state: { lat, lng } });
-  //  };
 
   const handleClick = () => {
     navigate("/");
@@ -53,24 +39,9 @@ function FindMedicine() {
             이런 약을 추천드려요
           </h1>
         </div>
-        <MedicineCard
-          name={"타이레놀"}
-          kind={"진통제"}
-          dose={"성인 1회 1정"}
-          pic={Medicine1}
-        />
-        <MedicineCard
-          name={"마이드린"}
-          kind={"진통제"}
-          dose={"성인 1회 1정"}
-          pic={Medicine2}
-        />
-        <MedicineCard
-          name={"낙센"}
-          kind={"진통제"}
-          dose={"성인 1회 1정"}
-          pic={Medicine3}
-        />
+        <MedicineCard name={"타이레놀"} ingredients={"어쩌구저쩌구"} />
+        <MedicineCard name={"마이드린"} ingredients={"어쩌구저쩌구"} />
+        <MedicineCard name={"낙센"} ingredients={"어쩌구저쩌구"} />
         <h1 className="SubTitle" style={{ marginTop: "2rem" }}>
           혹시 아래 증상이 있으신가요?
         </h1>
