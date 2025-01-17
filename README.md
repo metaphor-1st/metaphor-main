@@ -1,7 +1,7 @@
 # metaphor 해커톤 team1 
 
 ## 서비스 명
-<img src="logo.png" alt="logo Image"/>
+<img src="img/logo.png" alt="logo Image"/>
 
 ## 서비스 소개
 AI가 증상을 분석하여 질환을 예측하고, 적절한 약 처방과 함께 근처 약국의 위치 정보를 제공하는 통합 서비스
