@@ -1,30 +1,58 @@
-### model test
-POST http://localhost:5000/predict
-Content-Type: application/json
-
-{
-  "text" : "머리가 아프고 열이 나요" 
-}
-
-
 ### model test-2
 POST http://localhost:5000/predict
 Content-Type: application/json
 
 {
-  "birthDate": "19900101",
-  "category": "소화기",
-  "symptomText": "소화가 안되고 가스가 차요"
+  "medicineData": {
+    "mediTF": true,
+    "description": "타이레놀"
+  },
+  "painData": {
+    "pain": "두통",
+    "description": "머리가 쑤셔요"
+  },
+  "userData": {
+    "userId": "b75f8c9b-9ee1-42a2-bce8-b2c93598a788",
+    "bornYear": "18",
+    "sex": "female",
+    "message": "사용자 정보 생성 요청 완료"
+  }
+}
+
+### model test
+POST http://localhost:4000/result
+Content-Type: application/json
+
+{ 
+    "userId": "user1",
+    "bornYear": "18",
+    "sex": "male",
+    "pain": "두통",
+    "description": "한쪽 머리가 아프고 메스꺼워요",
+    "mediTF": true
 }
 
 
+###모델에 요청하기
+POST http://localhost:4000/result
+Content-Type: application/json
 
-### 모델연결 test
-POST http://localhost:4000/user/b5fef10a-8dd1-42bb-b665-8dbac3ebdb3f/result
+{"inputs":"Hello, world!"}
+
+
+### check ngrok
+POST https://3e65-211-205-24-46.ngrok-free.app/chat
 Content-Type: application/json
 
 {
+  "userId": "1234",
+  "bornYear": "1998",
   "sex": "male",
-  "bornYear": "2002",
-  "description" : "소화가 안되고 가스가 차요" 
+  "pain": "두통",
+  "description": "머리가 아프고 메스꺼움",
+  "mediTF": false
 }
+
+
+###test get_url
+GET http://0.0.0.0:8000/get_url

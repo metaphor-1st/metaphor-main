@@ -7,12 +7,15 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
+    "ngrok": "^5.0.0-beta.2",
     "nodemon": "^3.1.7",
+    "pipeline": "^0.1.3",
     "torch": "^0.2.7",
     "uuid": "^11.0.3"
   },
   "type": "module",
   "scripts": {
+    "start": "concurrently \"python utils/model_connection.py\" \"node app.js\"",
     "seed": "node prisma/seed.js"
   }
 }

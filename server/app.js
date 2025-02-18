@@ -6,7 +6,7 @@ import cors from "cors";
 
 import { v4 as uuidv4 } from "uuid"; // uuid 모듈 불러오기
 
-import { spawn } from 'child_process';      //파이썬 서버 돌리기위한 import 
+//import { spawn } from 'child_process';      //파이썬 서버 돌리기위한 import 
 
 // Prisma 클라이언트 초기화
 const prisma = new PrismaClient();
@@ -141,59 +141,34 @@ app.get("/user/:userId/pain/medi/:mediId", (req, res) => {
   }
 });
 
-//파이썬 서버
-let pythonServer;
 
-function startPythonServer() {
-  pythonServer = spawn('python', ['utils/model_connection.py']);
-
-  pythonServer.stdout.on('data', (data) => {
-    console.log(`Python server output: ${data}`);
-  });
-
-  pythonServer.stderr.on('data', (data) => {
-    console.error(`Python server error: ${data}`);
-  });
-
-  pythonServer.on('close', (code) => {
-    console.log(`Python server exited with code ${code}`);
-  });
-}
-
-// Node.js 서버 시작 시 Python 서버 실행
-startPythonServer();
-
-//결과 조회화면 - 모델에 요청보내기
-app.post("/user/:userId/pain/medi", async (req, res) => {
+//결과 라우터
+app.post("/result", async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const allData = req.body;
+    //프론트에서 받은 데이터 처리
+    const { userId, mediTF, sex, userData, painData } = req.body;
 
-    // Python 스크립트 실행 및 결과 수신
-    const modelResult = await sendToModel(allData);
+    const combinedData = {
+      userId,
+      bornYear: userData.bornYear,
+      sex: userData.sex,
+      pain: painData.pain,
+      description: painData.description,
+      mediTF,
+    };
 
-    console.log(modelResult); // 점검용
+    //ngrok URL 가져옴
+    const response = await axios.get("http://0.0.0.0:8000/get_url");
+    const URL = response.data.url;
+    // replace()로 양옆의 따옴표 제거
+    const ngrokURL = URL.replace(/^"|"$/g, '');
 
-
-    // 2. 결과를 프론트엔드로 전송
-    res.json({ success: true, result: modelResult });
+    //서버로 요청 보냄
+    const fastApiResponse = await axios.post(`${ngrokURL}/chat`, combinedData);
+    res.json(fastApiResponse.data);   //fastAPI응답을 클라이언트에 반환
   } catch (error) {
-    console.error('Error processing result:', error);
-    res.status(500).json({ success: false, error: 'Internal server error' });
-  }
-});
-
-async function sendToModel(allData) {
-  const modelApiUrl = 'http://localhost:5000/predict'; // 모델 API 주소
-  const response = await axios.post(modelApiUrl, allData);
-  return response.data;
-}
-
-
-// Node.js 서버 종료 시 Python 서버도 종료
-process.on('exit', () => {
-  if (pythonServer) {
-    pythonServer.kill();
+    console.log('FastAPI 서버 요청 실패', error);
+    res.status(500).json({ error: "FastAPI 서버 요청 실패" });
   }
 });
 
