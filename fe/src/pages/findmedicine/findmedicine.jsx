@@ -8,11 +8,6 @@ import CautionIcon from "../../images/cautionIcon.svg";
 
 function FindMedicine() {
   const navigate = useNavigate();
-  const [disease, setDisease] = useState("편두통"); 
-const [resultdescription, setResultdescription] = useState("."
-); // 증상
-
-const [caution, setCaution] = useState(""); // 주의사항
 
 const [diseaseData, setDiseaseData] = useState([]);
   const handleClick = () => {
@@ -20,7 +15,6 @@ const [diseaseData, setDiseaseData] = useState([]);
   };
 
   useEffect(() => {
-    // Fetch data from the backend
     fetch("http://localhost:4000/result", {
       method: "GET",
       headers: {
@@ -30,7 +24,10 @@ const [diseaseData, setDiseaseData] = useState([]);
       .then((response) => response.json())
       .then((data) => {
         const processedData = data.analysis.map((diseaseData) => {
+          // 약품 리스트 분리
           const medicines = diseaseData.medicine.split(/\/ ?/).map(med => med.trim());
+
+           // 성분 정보 매핑
           const ingredientMapping = diseaseData.ingredients.split(/(?=\w+\/)/).reduce((acc, entry) => {
             const [medicineName, ingredient] = entry.split('/');
             if (medicineName && ingredient) {
@@ -38,6 +35,7 @@ const [diseaseData, setDiseaseData] = useState([]);
             }
             return acc;
           }, {});
+
           return {
             ...diseaseData,
             medicines: medicines.map(medicine => ({
@@ -51,29 +49,38 @@ const [diseaseData, setDiseaseData] = useState([]);
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  const painText = "1. 태어나서 지금까지 느끼지 못했던 통증 2. 50세 이후에 시작된 두통 3. 열이 나거나 목이 뻣뻣하고 피부에 발진이 동반되는 두통 4. HIV 감염자나 암 환자에서 평소와 다른 두통이 느껴질 때"
-
-  const cautionText = "혈압약, 항우울제, 항응고제 등과 함께 복용 시 상호작용성을 반드시 의사와 상의하세요";
-
-
   return (
     <div>
       <Header />
       <div className="TitleBox">
-        <h1>
-          증상을 기반으로 찾아보니 <br />
-          <span style={{ color: "#2F5CE4" }}>{diseaseData.disease}</span>이 가장
-          유력해요
-        </h1>
+       <h1>
+    증상을 기반으로 찾아보니 <br />
+    {diseaseData.length > 0 ? (
+      <span style={{ color: "#2F5CE4" }}>{diseaseData[0]?.disease}</span>
+    ) : (
+      "데이터 로딩 중..."
+    )}이 가장 유력해요
+  </h1>
       </div>
       <div className="ContentResult">
         <div className="DiseaseDisc">
-          <div className="DiseaseTitle">
-            <span style={{ color: "#2F5CE4" }}>{disease}</span> 외 비슷한 질병
-          </div>
+        <div className="DiseaseTitle">
+    {diseaseData.length > 0 ? (
+      <>
+        <span style={{ color: "#2F5CE4" }}>{diseaseData[0]?.disease}</span> 외 비슷한 질병
+      </>
+    ) : (
+      "질병 정보를 불러오는 중..."
+    )}
+  </div>
           <div className="TitleLine"></div>
-          <span className="DiseaseDiscText">여기 다른 병명넣기.
-            {resultdescription}</span>
+          <span className="DiseaseDiscText">
+    {diseaseData.length > 1
+      ? diseaseData.slice(1).map((item, index) => (
+          <span key={index}>{item.disease}{index !== diseaseData.length - 2 ? ', ' : ''}</span>
+        ))
+      : "비슷한 질병 정보 없음"}
+  </span>
         </div>
         <div style={{ marginRight: "auto" }}>
           <h1 className="SubTitle" style={{ marginTop: "2rem" }}>
@@ -81,7 +88,8 @@ const [diseaseData, setDiseaseData] = useState([]);
           </h1>
         </div>
         <div>
-        {diseaseData.map((diseaseData, index) => (
+          {/* 3가지 질병에 대한 추천 약을 모두 보여줌 */}
+        {/* {diseaseData.map((diseaseData, index) => (
         <div key={index}>
           {diseaseData.medicines.map((medicineData, medIndex) => (
             <MedicineCard
@@ -91,19 +99,29 @@ const [diseaseData, setDiseaseData] = useState([]);
             />
           ))}
         </div>
-      ))}
+      ))} */}
+      {/* 맨 첫번째 질병에 대한 약만 보여줌 */}
+      {diseaseData.length > 0 && (
+  <div>
+    {diseaseData[0].medicines.map((medicineData, medIndex) => (
+      <MedicineCard
+        key={medIndex}
+        name={medicineData.name}
+        ingredients={medicineData.ingredients}
+      />
+    ))}
+  </div>
+)}
+
     </div>
-        {/* <MedicineCard name={recommendedMedi} ingredients={mediIngreidents} />
-        <MedicineCard name={recommendedMedi} ingredients={mediIngreidents} />
-        <MedicineCard name={recommendedMedi} ingredients={mediIngreidents} /> */}
+    
+
         <h1 className="SubTitle" style={{ marginTop: "2rem" }}>
           혹시 아래 증상이 있으신가요?
         </h1>
         <div className="SymptomList">
   <ul>
-    {painText.match(/\d+\.\s[^0-9]+/g)?.map((text, index) => (
-      <li key={index}>{text.replace(/^\d+\.\s/, "").trim()}</li>
-    ))}
+    {diseaseData.length > 0 ? (diseaseData[0].medicalAttention) : "증상 정보를 불러오는 중..."}
   </ul>
 </div>
         <div className="CautionText">
@@ -115,11 +133,20 @@ const [diseaseData, setDiseaseData] = useState([]);
         </h1>
         <div className="Precautions">
         <div className="PrecautionsText">
-  {caution ? (
-    caution
+  {diseaseData.length > 0 ? (
+    diseaseData[0].ageWarning
   ) : (
-    <span>주의사항이 제공되지 않았습니다.</span>
+    <span>나이대별 주의사항이 제공되지 않았습니다.</span>
   )}
+</div>
+
+        </div>
+        <div className="Precautions">
+        <div className="PrecautionsText">
+
+    <span>주의: 이 챗봇은 참고용으로만 사용하시기 바랍니다.
+      <br/>정확한 진단을 위해서는 반드시 의료 전문가와 상담하세요.
+      <br/>증상이 심각하다고 판단되면 즉시 병원을 방문하시기 바랍니다.</span>
 </div>
 
         </div>

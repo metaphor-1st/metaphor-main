@@ -22,7 +22,7 @@ const StartButton = ({ type, isSelected, userId }) => {
             구체적인 증상을 입력하면, 해당 증상에 가장 적합한
             <br />
           </span>
-          <span> 약과 약국 정보를 알 수 있어요!</span>
+          <span> 약 정보를 알 수 있어요!</span>
         </>
       ),
       link: "/userInfo",

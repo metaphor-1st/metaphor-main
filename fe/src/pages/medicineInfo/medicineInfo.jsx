@@ -43,6 +43,8 @@ function MedicineInfo() {
               userId: userId,
               mediTF: mediData.mediTF,
               taken_medi: mediData.mediTF ? mediData.description : null,
+              userData: userData,
+              painData: painData,
             }), 
           }
         );
