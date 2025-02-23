@@ -78,7 +78,15 @@ function MedicineCard({ name, ingredients }) {
             <div>약 성분</div>
           </div>
           <div className="MedicineInfoText">
-            <div>{ingredients}</div>
+          <ul className="IngredientList">
+              {Array.isArray(ingredients) && ingredients.length > 0 ? (
+                ingredients.map((ingredient, index) => (
+                  <li key={index}>{ingredient}</li>
+                ))
+              ) : (
+                <li>성분 정보가 없습니다.</li>
+              )}
+            </ul>
           </div>
         </div>
       </div>
