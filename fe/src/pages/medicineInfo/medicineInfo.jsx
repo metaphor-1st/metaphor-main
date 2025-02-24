@@ -21,15 +21,6 @@ function MedicineInfo() {
       
       console.log("전송할 데이터(medicineData):", mediData);
       sessionStorage.setItem('medicineData', JSON.stringify(mediData));   //클라이언트사이드 세션에 저장
-      
-      
-      //모든 정보 통합
-      //세션 스토리지에서 모든 데이터 가져오기
-      const userData = JSON.parse(sessionStorage.getItem('userData'));
-      const painData = JSON.parse(sessionStorage.getItem('painData'));
-      const medicineData = JSON.parse(sessionStorage.getItem('medicineData'));
-      
-
      
       try {
         const response = await fetch(
@@ -43,8 +34,6 @@ function MedicineInfo() {
               userId: userId,
               mediTF: mediData.mediTF,
               taken_medi: mediData.mediTF ? mediData.description : null,
-              userData: userData,
-              painData: painData,
             }), 
           }
         );

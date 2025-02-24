@@ -146,16 +146,19 @@ app.get("/user/:userId/pain/medi/:mediId", (req, res) => {
 app.post("/result", async (req, res) => {
   try {
     //프론트에서 받은 데이터 처리
-    const { userId, mediTF, sex, userData, painData } = req.body;
+    console.log("프론트에서 준 데이터", req.body);
+    const { userData, painData, medicineData } = req.body;
 
     const combinedData = {
-      userId,
-      bornYear: userData.bornYear,
+      userId: userData.userId,
+      bornYear: String(userData.bornYear),
       sex: userData.sex,
       pain: painData.pain,
       description: painData.description,
-      mediTF,
+      mediTF: medicineData.mediTF,
     };
+
+    console.log('모델에 보낼 데이터', combinedData);
 
     //ngrok URL 가져옴
     const response = await axios.get("http://0.0.0.0:8000/get_url");
@@ -167,7 +170,7 @@ app.post("/result", async (req, res) => {
     const fastApiResponse = await axios.post(`${ngrokURL}/chat`, combinedData);
     res.json(fastApiResponse.data);   //fastAPI응답을 클라이언트에 반환
   } catch (error) {
-    console.log('FastAPI 서버 요청 실패', error);
+    console.log('FastAPI 서버 요청 실패', error.message);
     res.status(500).json({ error: "FastAPI 서버 요청 실패" });
   }
 });
