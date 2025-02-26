@@ -15,14 +15,30 @@ const [diseaseData, setDiseaseData] = useState([]);
   };
 
   useEffect(() => {
+    //세션 스토리지에서 모든 데이터 가져오기
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const painData = JSON.parse(sessionStorage.getItem('painData'));
+    const medicineData = JSON.parse(sessionStorage.getItem('medicineData'));
+        
+    //전송할 데이터
+    const requestData = {
+      userData: userData,
+      painData: painData,
+      medicineData: medicineData,
+    }
+
+    console.log("결과라우터로 전송할 정보", requestData);
+
     fetch("http://localhost:4000/result", {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(requestData), 
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log("서버 응답 데이터:", data);
         const processedData = data.analysis.map((diseaseData) => {
           // 약품 리스트 분리
           const medicines = diseaseData.medicine.split(/\/ ?/).map(med => med.trim());
