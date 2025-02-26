@@ -119,7 +119,7 @@ const [diseaseData, setDiseaseData] = useState([]);
         </h1>
         <div className="SymptomList">
         <ul>
-            {diseaseData[0].length > 0 ? (
+            {diseaseData.length > 0 ? (
               diseaseData[0].medicalAttention.split(/,|\/|;/).map((symptom, index) => (
                 <li key={index}>{symptom.trim()}</li>
               ))
@@ -137,7 +137,7 @@ const [diseaseData, setDiseaseData] = useState([]);
         </h1>
         <div className="Precautions">
         <div className="PrecautionsText">
-  {diseaseData[0].length > 0 ? (
+  {diseaseData.length > 0 ? (
     diseaseData[0].ageWarning
   ) : (
     <span>나이대별 주의사항이 제공되지 않았습니다.</span>
