@@ -44,7 +44,7 @@ const [diseaseData, setDiseaseData] = useState([]);
         const processedData = data.analysis.map((diseaseData) => ({
           ...diseaseData,
           medicines: diseaseData.medicine.split(/\/ ?/).map(med => med.trim()),
-          ingredients: diseaseData.ingredients.split(/\/ ?/).map(ing => ing.trim())
+          //ingredients: diseaseData.ingredients.split(/\/ ?/).map(ing => ing.trim())
         }));
         
         setDiseaseData(processedData);
@@ -99,13 +99,11 @@ const [diseaseData, setDiseaseData] = useState([]);
     {diseaseData.map((disease, index) => (
             <div key={index}>
               <h2>{disease.disease}</h2>
-              {disease.medicines.map((medicine, medIndex) => (
                 <MedicineCard
-                  key={`${index}-${medIndex}`}
-                  name={medicine}
-                  ingredients={disease.ingredients[medIndex] || "성분 정보 없음"}
+                  key={index}
+                  name={disease.medicine} // 약품 이름
+                  ingredients={disease.ingredients || "성분 정보 없음"} // 성분 정보
                 />
-              ))}
             </div>
           ))}
   </div>
@@ -120,7 +118,7 @@ const [diseaseData, setDiseaseData] = useState([]);
         <div className="SymptomList">
         <ul>
             {diseaseData.length > 0 ? (
-              diseaseData[0].medicalAttention.split(/,|\/|;/).map((symptom, index) => (
+              diseaseData[0].medicalAttention.map((symptom, index) => (
                 <li key={index}>{symptom.trim()}</li>
               ))
             ) : (

@@ -168,7 +168,7 @@ app.post("/result", async (req, res) => {
 
     //서버로 요청 보냄
     const fastApiResponse = await axios.post(`${ngrokURL}/chat`, combinedData);
-    res.json(fastApiResponse.data);   //fastAPI응답을 클라이언트에 반환
+    res.json(fastApiResponse.data.json_response);   //fastAPI응답을 클라이언트에 반환
   } catch (error) {
     console.log('FastAPI 서버 요청 실패', error.message);
     res.status(500).json({ error: "FastAPI 서버 요청 실패" });

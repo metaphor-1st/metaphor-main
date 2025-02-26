@@ -41,7 +41,7 @@ Content-Type: application/json
 
 
 ### check ngrok
-POST https://3e65-211-205-24-46.ngrok-free.app/chat
+POST https://aa25-2001-2d8-2010-d53e-9a-a172-b0b-7345.ngrok-free.app/chat
 Content-Type: application/json
 
 {
@@ -49,8 +49,8 @@ Content-Type: application/json
   "bornYear": "1998",
   "sex": "male",
   "pain": "두통",
-  "description": "머리가 아프고 메스꺼움",
-  "mediTF": false
+  "description": "한쪽 머리가 아프고 메스꺼움이 있어요",
+  "mediTF": true
 }
 
 
