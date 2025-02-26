@@ -26,16 +26,15 @@ const [diseaseData, setDiseaseData] = useState([]);
         const processedData = data.analysis.map((diseaseData) => {
           // 약품 리스트 분리
           const medicines = diseaseData.medicine.split(/\/ ?/).map(med => med.trim());
-
-           // 성분 정보 매핑
-          const ingredientMapping = diseaseData.ingredients.split(/(?=\w+\/)/).reduce((acc, entry) => {
-            const [medicineName, ingredient] = entry.split('/');
-            if (medicineName && ingredient) {
-              acc[medicineName.trim()] = ingredient.trim();
+        
+          // 성분 정보 매핑
+          const ingredientMapping = diseaseData.ingredients.split(/\/ ?/).reduce((acc, entry, index, arr) => {
+            if (index % 2 === 0 && arr[index + 1]) {
+              acc[entry.trim()] = arr[index + 1].trim();
             }
             return acc;
           }, {});
-
+        
           return {
             ...diseaseData,
             medicines: medicines.map(medicine => ({
@@ -44,7 +43,9 @@ const [diseaseData, setDiseaseData] = useState([]);
             }))
           };
         });
+        
         setDiseaseData(processedData);
+        console.log(processedData);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);

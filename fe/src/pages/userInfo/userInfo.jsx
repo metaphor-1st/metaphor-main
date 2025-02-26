@@ -18,7 +18,7 @@ function UserInfo() {
   };
 
   const handleYearChange = (year) => {
-    setSelectedYear((Number(2025) - Number(year)));
+    setSelectedYear(year);
     console.log(selectedYear)
   };
 
